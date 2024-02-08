@@ -38,8 +38,11 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Check if 'Lint with flake8' step failed
       if: steps.flake8.outcome != 'success'
+      env:
+        FLAKE8_OUTCOME: steps.flake8.outcome
       run: |
         echo "flake8 fails"
+        echo "${FLAKE8_OUTCOME}"        
         exit 1
     - name: Test with pytest
       run: |
